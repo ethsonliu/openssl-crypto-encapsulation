@@ -31,7 +31,7 @@ void md5_file(const char *filename, unsigned char digest[16])
         unsigned char buffer[1024];
 
         while (len = fread(buffer, 1, 1024, file))
-            MD5_Update(context, buffer, len);
+            MD5_Update(&context, buffer, len);
 
         MD5_Final(digest, &context);
 
