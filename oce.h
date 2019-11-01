@@ -27,13 +27,13 @@ extern "C"
  *             The byte array you want to encode.
  *
  * @param[in]  byte_array_len
- *             The length of param byte_array.
+ *             The length of byte_array.
  *
  * @param[out] hex
  *             The hex output. The capacity should be large enough to contain
  *             the hex string, byte_array_len * 2 + 1 is advisable.
  */
-void to_hex(unsigned char *byte_array, int byte_array_len, char *hex);
+void to_hex(const unsigned char *byte_array, int byte_array_len, char *hex);
 
 #if OCE_WITH_MD5
 /**
@@ -57,6 +57,48 @@ void md5_string(const char *str, unsigned char digest[16]);
  *             16 bytes digest output.
  */
 void md5_file(const char *filename, unsigned char digest[16]);
+#endif
+
+#if OCE_WITH_BASE64
+
+#define BASE64_ENCODE_OUT_SIZE(n) ((((n) + 2) / 3) * 4 + 1)
+#define BASE64_DECODE_OUT_SIZE(n) (((n) / 4) * 3)
+
+/**
+ * Base64 encode.
+ *
+ * @param[in]  byte_array
+ *             The byte array you want to encode.
+ *
+ * @param[in]  byte_array_len
+ *             The length of byte_array.
+ *
+ * @param[out] base64_string
+ *             The base64 encoded string output. The capacity should be large enough
+ *             to contain the encoded string, you can use BASE64_ENCODE_OUT_SIZE(byte_array_len)
+ *             directly.
+ *
+ * @return     The length of base64_string.
+ */
+int base64_encode(const unsigned char *byte_array, int byte_array_len, char *base64_string);
+
+/**
+ * Base64 decode.
+ *
+ * @param[in]  base64_string
+ *             The base64 encoded string.
+ *
+ * @param[in]  base64_string_len
+ *             The length of base64_string.
+ *
+ * @param[out] byte_array
+ *             The original byte array output. The capacity should be large enough
+ *             to contain the byte array, you can use BASE64_DECODE_OUT_SIZE(byte_array_len)
+ *             directly.
+ *
+ * @return     The length of byte_array.
+ */
+int base64_decode(const char *base64_string, int base64_string_len, unsigned char *byte_array);
 #endif
 
 #ifdef __cplusplus
