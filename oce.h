@@ -67,20 +67,20 @@ void md5_file(const char *filename, unsigned char digest[16]);
 /**
  * Base64 encode.
  *
- * @param[in]  byte_array
- *             The byte array you want to encode.
+ * @param[in]  plain_text
+ *             The plain text byte array you want to encode.
  *
- * @param[in]  byte_array_len
- *             The length of byte_array.
+ * @param[in]  plain_text_len
+ *             The length of plain_text.
  *
  * @param[out] base64_string
- *             The base64 encoded string output with a null character terminator. The capacity should be large enough
- *             to contain the encoded string, you can use BASE64_ENCODE_OUT_SIZE(byte_array_len)
- *             directly.
+ *             The encoded base64 string output with a null character terminator. The capacity
+ *             should be large enough to contain the encoded string, you can use
+ *             BASE64_ENCODE_OUT_SIZE(byte_array_len) directly.
  *
  * @return     The length of base64_string.
  */
-int base64_encode(const unsigned char *byte_array, int byte_array_len, char *base64_string);
+int base64_encode(const unsigned char *plain_text, int plain_text_len, char *base64_string);
 
 /**
  * Base64 decode.
@@ -91,14 +91,14 @@ int base64_encode(const unsigned char *byte_array, int byte_array_len, char *bas
  * @param[in]  base64_string_len
  *             The length of base64_string.
  *
- * @param[out] byte_array
- *             The original byte array output. The capacity should be large enough
+ * @param[out] plain_text
+ *             The plain text byte array output. The capacity should be large enough
  *             to contain the byte array, you can use BASE64_DECODE_OUT_SIZE(byte_array_len)
  *             directly.
  *
- * @return     The length of byte_array.
+ * @return     The length of plain_text.
  */
-int base64_decode(const char *base64_string, int base64_string_len, unsigned char *byte_array);
+int base64_decode(const char *base64_string, int base64_string_len, unsigned char *plain_text);
 #endif
 
 #ifdef __cplusplus

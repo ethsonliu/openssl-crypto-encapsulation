@@ -47,14 +47,14 @@ void md5_file(const char *filename, unsigned char digest[16])
 #endif
 
 #if OCE_WITH_BASE64
-int base64_encode(const unsigned char *byte_array, int byte_array_len, char *base64_string)
+int base64_encode(const unsigned char *plain_text, int plain_text_len, char *base64_string)
 {
     BIO *b64 = BIO_new(BIO_f_base64());
     BIO *mem = BIO_new(BIO_s_mem());
 
     BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
     BIO_push(b64, mem);
-    BIO_write(b64, byte_array, byte_array_len);
+    BIO_write(b64, plain_text, plain_text_len);
     BIO_flush(b64);
 
     char *output = NULL;
@@ -69,7 +69,7 @@ int base64_encode(const unsigned char *byte_array, int byte_array_len, char *bas
     return len;
 }
 
-int base64_decode(const char *base64_string, int base64_string_len, unsigned char *byte_array)
+int base64_decode(const char *base64_string, int base64_string_len, unsigned char *plain_text)
 {
     BIO *b64 = BIO_new(BIO_f_base64());
     BIO *mem = BIO_new_mem_buf(base64_string, -1);
@@ -78,7 +78,7 @@ int base64_decode(const char *base64_string, int base64_string_len, unsigned cha
     BIO_push(b64, mem);
 
     int len = 0;
-    len = BIO_read(b64, byte_array, base64_string_len);
+    len = BIO_read(b64, plain_text, base64_string_len);
 
     BIO_free_all(b64);
 
