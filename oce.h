@@ -74,7 +74,7 @@ void md5_file(const char *filename, unsigned char digest[16]);
  *             The length of byte_array.
  *
  * @param[out] base64_string
- *             The base64 encoded string output. The capacity should be large enough
+ *             The base64 encoded string output with a null character terminator. The capacity should be large enough
  *             to contain the encoded string, you can use BASE64_ENCODE_OUT_SIZE(byte_array_len)
  *             directly.
  *
