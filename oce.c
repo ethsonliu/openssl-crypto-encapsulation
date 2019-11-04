@@ -62,6 +62,7 @@ int base64_encode(const unsigned char *byte_array, int byte_array_len, char *bas
 
     len = BIO_get_mem_data(mem, &output);
     memcpy(base64_string, output, len);
+    base64_string[len] = '\0';
 
     BIO_free_all(b64);
 
