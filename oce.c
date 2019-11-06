@@ -46,6 +46,141 @@ void md5_file(const char *filename, unsigned char digest[16])
 }
 #endif
 
+#if OCE_WITH_AES
+int aes128_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes128_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes192_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[24], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_192_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes192_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[24], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_192_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes256_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[32], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_256_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes256_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[32], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_256_ecb(), NULL, key, NULL);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+#endif
+
 #if OCE_WITH_BASE64
 int base64_encode(const unsigned char *plain_text, int plain_text_len, char *base64_string)
 {

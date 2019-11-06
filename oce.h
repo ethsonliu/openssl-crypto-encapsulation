@@ -59,6 +59,52 @@ void md5_string(const char *str, unsigned char digest[16]);
 void md5_file(const char *filename, unsigned char digest[16]);
 #endif
 
+#if OCE_WITH_AES
+/**
+ * AES 128/192/256 ECB encode with default PADDING_PKCS7.
+ *
+ * @param[in]  plain_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  plain_text_len
+ *             The length of plain_text.
+ *
+ * @param[in]  key
+ *             The 16/24/32 bytes key.
+ *
+ * @param[out] aes_cipher_text
+ *             The encoded cipher text output. The capacity should be large
+ *             enough to contain the cipher text.
+ *
+ * @return     The length of aes_cipher_text.
+ */
+int aes128_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], unsigned char *aes_cipher_text);
+int aes192_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[24], unsigned char *aes_cipher_text);
+int aes256_ecb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[32], unsigned char *aes_cipher_text);
+
+/**
+ * AES 128/192/256 ECB decode with default PADDING_PKCS7.
+ *
+ * @param[in]  aes_cipher_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  aes_cipher_text_len
+ *             The length of aes_cipher_text.
+ *
+ * @param[in]  key
+ *             The 16/24/32 bytes key.
+ *
+ * @param[out] plain_text
+ *             The plain text byte array output. The capacity should be large
+ *             enough to contain the plain text.
+ *
+ * @return     The length of plain_text.
+ */
+int aes128_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], unsigned char *plain_text);
+int aes192_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[24], unsigned char *plain_text);
+int aes256_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[32], unsigned char *plain_text);
+#endif
+
 #if OCE_WITH_BASE64
 
 #define BASE64_ENCODE_OUT_SIZE(n) ((((n) + 2) / 3) * 4 + 1)
