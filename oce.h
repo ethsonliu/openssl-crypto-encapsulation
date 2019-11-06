@@ -4,7 +4,7 @@
 #ifdef __cplusplus
 extern "C"
 {
-#endif
+#endif /** __cplusplus */
 
 #define OCE_YES 1
 #define OCE_NO  0
@@ -57,7 +57,7 @@ void md5_string(const char *str, unsigned char digest[16]);
  *             16 bytes digest output.
  */
 void md5_file(const char *filename, unsigned char digest[16]);
-#endif
+#endif /** OCE_WITH_MD5 */
 
 #if OCE_WITH_AES
 /**
@@ -103,7 +103,57 @@ int aes256_ecb_encode(const unsigned char *plain_text, int plain_text_len, const
 int aes128_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], unsigned char *plain_text);
 int aes192_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[24], unsigned char *plain_text);
 int aes256_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[32], unsigned char *plain_text);
-#endif
+
+/**
+ * AES 128/192/256 CBC encode with default PADDING_PKCS7.
+ *
+ * @param[in]  plain_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  plain_text_len
+ *             The length of plain_text.
+ *
+ * @param[in]  key
+ *             The 16/24/32 bytes key.
+ *
+ * @param[in]  iv
+ *             The 16 bytes initialization vector.
+ *
+ * @param[out] aes_cipher_text
+ *             The encoded cipher text output. The capacity should be large
+ *             enough to contain the cipher text.
+ *
+ * @return     The length of aes_cipher_text.
+ */
+int aes128_cbc_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+int aes192_cbc_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+int aes256_cbc_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+
+/**
+ * AES 128/192/256 CBC decode with default PADDING_PKCS7.
+ *
+ * @param[in]  aes_cipher_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  aes_cipher_text_len
+ *             The length of aes_cipher_text.
+ *
+ * @param[in]  key
+ *             The 16/24/32 bytes key.
+ *
+ * @param[in]  iv
+ *             The 16 bytes initialization vector.
+ *
+ * @param[out] plain_text
+ *             The plain text byte array output. The capacity should be large
+ *             enough to contain the plain text.
+ *
+ * @return     The length of plain_text.
+ */
+int aes128_cbc_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+int aes192_cbc_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+int aes256_cbc_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+#endif /** OCE_WITH_AES */
 
 #if OCE_WITH_BASE64
 
@@ -145,10 +195,10 @@ int base64_encode(const unsigned char *plain_text, int plain_text_len, char *bas
  * @return     The length of plain_text.
  */
 int base64_decode(const char *base64_string, int base64_string_len, unsigned char *plain_text);
-#endif
+#endif /** OCE_WITH_BASE64 */
 
 #ifdef __cplusplus
 }
-#endif
+#endif /** __cplusplus */
 
-#endif
+#endif /** OCE_H */
