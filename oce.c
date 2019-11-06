@@ -298,7 +298,139 @@ int aes256_cbc_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_
 {
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
 
-    EVP_DecryptInit_ex(ctx, EVP_aes_192_cbc(), NULL, key, iv);
+    EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes128_cfb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_128_cfb(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes128_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_128_cfb(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes192_cfb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_192_cfb(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes192_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_192_cfb(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_DecryptUpdate(ctx, plain_text, &outlen, aes_cipher_text, aes_cipher_text_len);
+    len += outlen;
+    plain_text += outlen;
+
+    EVP_DecryptFinal_ex(ctx, plain_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes256_cfb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_EncryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, key, iv);
+    EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
+
+    int len = 0;
+    int outlen = 0;
+
+    EVP_EncryptUpdate(ctx, aes_cipher_text, &outlen, plain_text, plain_text_len);
+    len += outlen;
+    aes_cipher_text += outlen;
+
+    EVP_EncryptFinal_ex(ctx, aes_cipher_text, &outlen);
+    len += outlen;
+
+    EVP_CIPHER_CTX_free(ctx);
+
+    return len;
+}
+
+int aes256_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text)
+{
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();;
+
+    EVP_DecryptInit_ex(ctx, EVP_aes_256_cfb(), NULL, key, iv);
     EVP_CIPHER_CTX_set_padding(ctx, EVP_PADDING_PKCS7);
 
     int len = 0;
