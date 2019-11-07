@@ -114,7 +114,7 @@ int aes256_ecb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_
  *             The length of plain_text.
  *
  * @param[in]  key
- *             The 16/24/32 bytes key.
+ *             The 16 bytes key.
  *
  * @param[in]  iv
  *             The 16 bytes initialization vector.
@@ -139,7 +139,7 @@ int aes256_cbc_encode(const unsigned char *plain_text, int plain_text_len, const
  *             The length of aes_cipher_text.
  *
  * @param[in]  key
- *             The 16/24/32 bytes key.
+ *             The 16 bytes key.
  *
  * @param[in]  iv
  *             The 16 bytes initialization vector.
@@ -164,7 +164,7 @@ int aes256_cbc_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_
  *             The length of plain_text.
  *
  * @param[in]  key
- *             The 16/24/32 bytes key.
+ *             The 16 bytes key.
  *
  * @param[in]  iv
  *             The 16 bytes initialization vector.
@@ -189,7 +189,7 @@ int aes256_cfb_encode(const unsigned char *plain_text, int plain_text_len, const
  *             The length of aes_cipher_text.
  *
  * @param[in]  key
- *             The 16/24/32 bytes key.
+ *             The 16 bytes key.
  *
  * @param[in]  iv
  *             The 16 bytes initialization vector.
@@ -203,6 +203,56 @@ int aes256_cfb_encode(const unsigned char *plain_text, int plain_text_len, const
 int aes128_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
 int aes192_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
 int aes256_cfb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+
+/**
+ * AES 128/192/256 OFB encode with default PADDING_PKCS7.
+ *
+ * @param[in]  plain_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  plain_text_len
+ *             The length of plain_text.
+ *
+ * @param[in]  key
+ *             The 16 bytes key.
+ *
+ * @param[in]  iv
+ *             The 16 bytes initialization vector.
+ *
+ * @param[out] aes_cipher_text
+ *             The encoded cipher text output. The capacity should be large
+ *             enough to contain the cipher text.
+ *
+ * @return     The length of aes_cipher_text.
+ */
+int aes128_ofb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+int aes192_ofb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+int aes256_ofb_encode(const unsigned char *plain_text, int plain_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *aes_cipher_text);
+
+/**
+ * AES 128/192/256 OFB decode with default PADDING_PKCS7.
+ *
+ * @param[in]  aes_cipher_text
+ *             The plain text byte array you want to encode.
+ *
+ * @param[in]  aes_cipher_text_len
+ *             The length of aes_cipher_text.
+ *
+ * @param[in]  key
+ *             The 16 bytes key.
+ *
+ * @param[in]  iv
+ *             The 16 bytes initialization vector.
+ *
+ * @param[out] plain_text
+ *             The plain text byte array output. The capacity should be large
+ *             enough to contain the plain text.
+ *
+ * @return     The length of plain_text.
+ */
+int aes128_ofb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+int aes192_ofb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
+int aes256_ofb_decode(const unsigned char *aes_cipher_text, int aes_cipher_text_len, const unsigned char key[16], const unsigned char iv[16], unsigned char *plain_text);
 #endif /** OCE_WITH_AES */
 
 #if OCE_WITH_BASE64
